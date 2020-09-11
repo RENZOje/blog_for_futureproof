@@ -1,11 +1,11 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, View
 from .models import *
 
 
 # Create your views here.
 
-class PostView(ListView):
+class MainView(ListView):
     model = Post
     template_name = 'main.html'
     queryset = Post.objects.all()
@@ -19,11 +19,15 @@ class PostView(ListView):
         return context
 
 
-class TagPostView(ListView):
-    model = Post
-    template_name = 'tag_main.html'
-    queryset = Post.objects.all()
-    context_object_name = 'posts'
+class TagPostView(View):
+    def get(self, request, slug):
+
+        tag = Tag.objects.get(link=slug)
+        posts = Post.objects.filter(tags=tag)
+
+        context = {'posts' : posts}
+
+        return render(request, 'tag_main.html', context)
 
 
 
