@@ -25,7 +25,7 @@ class TagPostView(View):
         tag = Tag.objects.get(link=slug)
         posts = Post.objects.filter(tags=tag)
 
-        context = {'posts' : posts}
+        context = {'posts' : posts, 'tag': tag}
 
         return render(request, 'tag_main.html', context)
 

@@ -23,7 +23,7 @@ class Post(models.Model):
 
     title = models.CharField(max_length=500, unique=True)
     description = models.TextField(blank=True)
-    image = models.ImageField(blank=True, upload_to='posts/')
+    image = models.ImageField(blank=True)
     # author =
     # time_publication = models.TimeField(auto_now=True)
     time_creation = models.DateTimeField(auto_now=True)
