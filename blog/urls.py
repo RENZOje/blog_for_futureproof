@@ -15,4 +15,8 @@ urlpatterns = [
     path('create_post/<str:pk>/', create_post, name='create_post'),
     path('update_post/<str:pk>/', update_post, name='update_post'),
     path('delete_post/<str:pk>/', delete_post, name='delete_post'),
+
+    path('create_tag/', create_tag, name='create_tag'),
+    path('delete_tag/<str:pk>/', delete_tag, name='delete_tag'),
+
 ]

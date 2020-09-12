@@ -18,9 +18,7 @@ class MainView(ListView):
     paginate_by = 2
 
     def get_context_data(self, **kwargs):
-        # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
-        # Add in a QuerySet of all the books
         context['tags'] = Tag.objects.all()
         return context
 
@@ -32,9 +30,7 @@ class DraftPostView(ListView):
     context_object_name = 'posts'
 
     def get_context_data(self, **kwargs):
-        # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
-        # Add in a QuerySet of all the books
         context['tags'] = Tag.objects.all()
         return context
 
@@ -56,6 +52,29 @@ class PostDetailView(DetailView):
     context_object_name = 'post'
 
 
+
+
+def create_tag(request):
+
+    form = TagForm()
+    if request.method == 'POST':
+        form = TagForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+
+    context = {'form': form}
+
+    return render(request, 'accounts/post_form.html', context)
+
+def delete_tag(request, pk):
+    post = Tag.objects.get(id=pk)
+    if request.method == "GET":
+        post.delete()
+        return redirect('/')
+
+
+
 def create_post(request, pk):
     author = Author.objects.get(id=pk)
 
@@ -74,6 +93,9 @@ def create_post(request, pk):
 def update_post(request, pk):
     post = Post.objects.get(id=pk)
     form = PostForm(instance=post)
+    state_draft = post.draft
+    if state_draft:
+        print(state_draft)
 
     if request.method == 'POST':
         form = PostForm(request.POST, instance=post)
