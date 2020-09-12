@@ -1,14 +1,15 @@
 <div class="blog-post">
     <a href="{{ post.get_absolute_url }}"><img src="{{ post.image.url }}" class="img_center" alt="">
-        <h2 class="blog-post-title">{{ post.title }}</h2>
-        <p class="blog-post-meta">{{ post.time_creation }} by <a href="#">Mark</a></p>
+        <h2 class="blog-post-title">{{ post.title }}</h2></a>
+        <p class="blog-post-meta">Post created: {{ post.time_creation }} by {{ request.user.author.name }}</p>
+        <p class="blog-post-meta">Last update: {{ post.time_last_update }} </p>
 
 
         <hr>
 
         {{ post.description }}
 
-    </a>
+
     <br>
     {% if request.user.is_authenticated %}
     <a style="{display: contents;}" class="btn btn-sm btn-outline-secondary"
