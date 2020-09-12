@@ -2,7 +2,10 @@
     <a href="{{ post.get_absolute_url }}"><img src="{{ post.image.url }}" class="img_center" alt="">
         <h2 class="blog-post-title">{{ post.title }}</h2></a>
         <p class="blog-post-meta">Post created: {{ post.time_creation }} by {{ request.user.author.name }}</p>
+{% if  post.time_creation != post.time_last_update %}
         <p class="blog-post-meta">Last update: {{ post.time_last_update }} </p>
+
+{% endif %}
 
 
         <hr>

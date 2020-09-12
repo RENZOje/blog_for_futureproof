@@ -1,7 +1,7 @@
 from django.db import models
 from django.shortcuts import reverse
 from django.contrib.auth.models import User
-
+from django.utils.text import slugify
 
 # Create your models here.
 
@@ -40,6 +40,13 @@ class Post(models.Model):
     draft = models.BooleanField(default=False)
     publish = models.BooleanField(default=False)
     tags = models.ManyToManyField(Tag)
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        if not self.id:
+            self.link = slugify(self.title)
+
+        super(Post, self).save()
 
     def get_absolute_url(self):
         return reverse('detail_post', kwargs={'slug': self.link})
