@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'k1n-rq4j!-)*tcp%msds)gpp5jc$j)+m+4)vd9!rbx7h*@rs+r'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['http://127.0.0.1:8000/','https://blog-for-futureproof.herokuapp.com/']
+ALLOWED_HOSTS = ['blog-for-futureproof.herokuapp.com']
 
 
 # Application definition
