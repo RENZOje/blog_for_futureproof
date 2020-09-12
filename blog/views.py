@@ -14,6 +14,8 @@ class MainView(ListView):
     template_name = 'main.html'
     queryset = Post.objects.filter(draft=False)
     context_object_name = 'posts'
+    ordering = ['-time_creation']
+    paginate_by = 2
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context

@@ -31,14 +31,13 @@ class Author(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=500, unique=True)
     description = models.TextField(blank=True)
-    image = models.ImageField(blank=True)
+    image = models.ImageField(blank=False)
     author = models.ForeignKey(Author, null=True, on_delete=models.SET_NULL)
+    time_publish = models.DateTimeField(auto_now=True, null=True)
     time_last_update = models.DateTimeField(auto_now=True,null=True)
-    # time_publication = models.TimeField(auto_now=True)
     time_creation = models.DateTimeField(auto_now_add=True)
     link = models.SlugField(unique=True)
     draft = models.BooleanField(default=False)
-    publish = models.BooleanField(default=False)
     tags = models.ManyToManyField(Tag)
 
     def save(self, force_insert=False, force_update=False, using=None,
