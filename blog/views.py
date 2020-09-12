@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, View
 from .models import *
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
-from forms import CreateUserForm
+from .forms import *
 from django.contrib import messages
+from django.forms import inlineformset_factory
 
 
 # Create your views here.
@@ -25,14 +25,12 @@ class MainView(ListView):
 
 class TagPostView(View):
     def get(self, request, slug):
-
         tag = Tag.objects.get(link=slug)
         posts = Post.objects.filter(tags=tag)
 
-        context = {'posts' : posts, 'tag': tag}
+        context = {'posts': posts, 'tag': tag}
 
         return render(request, 'tag_main.html', context)
-
 
 
 class PostDetailView(DetailView):
@@ -40,6 +38,43 @@ class PostDetailView(DetailView):
     template_name = 'detail_post.html'
     slug_field = 'link'
     context_object_name = 'post'
+
+
+def create_post(request, pk):
+    author = Author.objects.get(id=pk)
+
+    form = PostForm(initial={'author': author})
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+
+    context = {'form': form}
+
+    return render(request, 'accounts/post_form.html', context)
+
+
+def update_post(request, pk):
+    post = Post.objects.get(id=pk)
+    form = PostForm(instance=post)
+
+    if request.method == 'POST':
+        form = PostForm(request.POST, instance=post)
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+
+    context = {'form': form}
+    return render(request, 'accounts/post_form.html', context)
+
+
+def delete_post(request, pk):
+    post = Post.objects.get(id=pk)
+    if request.method == "GET":
+        post.delete()
+        return redirect('/')
+
 
 
 def register_page(request):

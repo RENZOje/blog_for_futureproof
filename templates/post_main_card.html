@@ -1,11 +1,20 @@
 <div class="blog-post">
-    <img src="{{ post.image.url }}" class="img_center" alt="">
-    <h2 class="blog-post-title">{{ post.title }}</h2>
-    <p class="blog-post-meta">{{ post.time_creation }} by <a href="#">Mark</a></p>
+    <a href="{{ post.get_absolute_url }}"><img src="{{ post.image.url }}" class="img_center" alt="">
+        <h2 class="blog-post-title">{{ post.title }}</h2>
+        <p class="blog-post-meta">{{ post.time_creation }} by <a href="#">Mark</a></p>
 
 
-    <hr>
-    {{ post.description }}
+        <hr>
 
+        {{ post.description }}
+
+    </a>
+    <br>
+    {% if request.user.is_authenticated %}
+    <a style="{display: contents;}" class="btn btn-sm btn-outline-secondary"
+       href="{% url 'update_post' post.id %}">Update</a>
+    <a onclick="return confirm('Are you sure you want to delete this post?');" style="{display: contents;}" class="btn btn-sm btn-outline-secondary"
+       href="{% url 'delete_post' post.id %} ">Delete</a>
+    {% endif %}
     <hr>
 </div>

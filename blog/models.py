@@ -36,8 +36,8 @@ class Post(models.Model):
     # time_publication = models.TimeField(auto_now=True)
     time_creation = models.DateTimeField(auto_now=True)
     link = models.SlugField(unique=True)
-    draft = models.BooleanField()
-    publish = models.BooleanField()
+    draft = models.BooleanField(default=False)
+    publish = models.BooleanField(default=False)
     tags = models.ManyToManyField(Tag)
 
     def get_absolute_url(self):
