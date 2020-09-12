@@ -6,6 +6,8 @@ from .forms import *
 from django.contrib import messages
 from django.forms import inlineformset_factory
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required
+
 
 # Create your views here.
 
@@ -45,6 +47,7 @@ class TagPostView(View):
         return render(request, 'tag_main.html', context)
 
 
+
 class PostDetailView(DetailView):
     model = Post
     template_name = 'detail_post.html'
@@ -53,7 +56,7 @@ class PostDetailView(DetailView):
 
 
 
-
+@login_required(login_url='login')
 def create_tag(request):
 
     form = TagForm()
@@ -67,6 +70,8 @@ def create_tag(request):
 
     return render(request, 'accounts/post_form.html', context)
 
+
+@login_required(login_url='login')
 def delete_tag(request, pk):
     post = Tag.objects.get(id=pk)
     if request.method == "GET":
@@ -74,7 +79,7 @@ def delete_tag(request, pk):
         return redirect('/')
 
 
-
+@login_required(login_url='login')
 def create_post(request, pk):
     author = Author.objects.get(id=pk)
 
@@ -89,13 +94,10 @@ def create_post(request, pk):
 
     return render(request, 'accounts/post_form.html', context)
 
-
+@login_required(login_url='login')
 def update_post(request, pk):
     post = Post.objects.get(id=pk)
     form = PostForm(instance=post)
-    state_draft = post.draft
-    if state_draft:
-        print(state_draft)
 
     if request.method == 'POST':
         form = PostForm(request.POST, instance=post)
@@ -107,7 +109,7 @@ def update_post(request, pk):
     context = { 'form': form }
     return render(request, 'accounts/post_form.html', context)
 
-
+@login_required(login_url='login')
 def delete_post(request, pk):
     post = Post.objects.get(id=pk)
     if request.method == "GET":
@@ -156,7 +158,7 @@ def login_page(request):
         context = {}
         return render(request, 'accounts/login.html', context)
 
-
+@login_required(login_url='login')
 def logout_user(request):
     logout(request)
     return redirect('login')
