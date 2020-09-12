@@ -25,7 +25,9 @@ SECRET_KEY = 'k1n-rq4j!-)*tcp%msds)gpp5jc$j)+m+4)vd9!rbx7h*@rs+r'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['blog-for-futureproof.herokuapp.com']
+
+ALLOWED_HOSTS = ['blog-for-futureproof.herokuapp.com','127.0.0.1']
+
 
 
 # Application definition
@@ -119,12 +121,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 STATIC_URL = '/static/'
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles/')
+
+
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
 
 
 MEDIA_URL = '/images/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images/')

@@ -10,13 +10,6 @@ class Tag(models.Model):
     title = models.CharField(max_length=500, unique=True)
     link = models.SlugField(unique=True)
 
-    def save(self, force_insert=False, force_update=False, using=None,
-             update_fields=None):
-        if not self.id:
-            self.link = slugify(self.title)
-
-        super(Tag, self).save()
-
     def get_absolute_url(self):
         return reverse('detail_tag', kwargs={'slug': self.link})
 
