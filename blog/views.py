@@ -17,7 +17,7 @@ class MainView(ListView):
     queryset = Post.objects.filter(draft=False)
     context_object_name = 'posts'
     ordering = ['-time_creation']
-    paginate_by = 2
+    paginate_by = 4
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
@@ -104,7 +104,7 @@ def update_post(request, pk):
     form = PostForm(instance=post)
 
     if request.method == 'POST':
-        form = PostForm(request.POST, instance=post)
+        form = PostForm(request.POST,request.FILES, instance=post)
         if form.is_valid():
             form.cleaned_data['time_last_update'] = timezone.now()
             form.save()
